@@ -502,7 +502,7 @@ int app_start( void )
     DeviceState = DEVICE_STATE_INIT;
     adc_continue_mode_test();
     printf("ClassA app AS923 start\r\n");
-    unsigned char devE[] = LORAWAN_DEVICE_EUI;
+    
     printf("DevEUI %02X%02X%02X%02X%02X%02X%02X%02X\r\n", DevEui[0],DevEui[1],DevEui[2],DevEui[3],DevEui[4],DevEui[5],DevEui[6],DevEui[7]);
     while( 1 )
     {
