@@ -31,6 +31,8 @@ extern int32_t adc_data1;
 extern int32_t adc_data2; 
 extern int32_t adc_cal;
 
+#define DEUI_FLASH_ADDR 0x0801E000
+
 #define ACTIVE_REGION LORAMAC_REGION_AS923
 
 #ifndef ACTIVE_REGION
@@ -502,7 +504,14 @@ int app_start( void )
     DeviceState = DEVICE_STATE_INIT;
     adc_continue_mode_test();
     printf("ClassA app AS923 start\r\n");
+    uint8_t DeuiFlash[8] = {0x68, 0x20, 0x21, 0x09, 0x00, 0x00, 0x00, 0x00};
     
+    memcpy((DeuiFlash+4), (uint8_t*)DEUI_FLASH_ADDR,sizeof(uint8_t)* 4);
+    for(int i=0; i<8; i++){
+        DevEui[i]= DeuiFlash[i];
+    }
+
+    unsigned char devE[] = LORAWAN_DEVICE_EUI;
     printf("DevEUI %02X%02X%02X%02X%02X%02X%02X%02X\r\n", DevEui[0],DevEui[1],DevEui[2],DevEui[3],DevEui[4],DevEui[5],DevEui[6],DevEui[7]);
     while( 1 )
     {
